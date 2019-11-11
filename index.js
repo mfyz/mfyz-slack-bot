@@ -11,7 +11,7 @@ app.get('/', function (req, res) {
 app.all('/slack-events', function (req, res) {
 	let payload = req.body;
 	console.log(payload);
-	if (!req.body) return res.error('Error!')
+	if (!req.body) return res.status(400).send('Request is missing body!')
 
 	// payload.type
 	// payload.token
