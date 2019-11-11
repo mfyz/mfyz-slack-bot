@@ -1,8 +1,10 @@
 const express = require('express')
 const path = require('path')
+const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 8112
 
 const app = express()
+app.use(bodyParser.json())
 
 app.get('/', function (req, res) {
 	res.json({ title: 'Hey', message: 'Hello there!' })
