@@ -8,8 +8,10 @@ app.get('/', function (req, res) {
 	res.json({ title: 'Hey', message: 'Hello there!' })
 })
 
-app.get('/slack-events', function (req, res) {
+app.all('/slack-events', function (req, res) {
 	let payload = req.body;
+	console.log(payload);
+	if (!req.body) return res.error('Error!')
 
 	// payload.type
 	// payload.token
