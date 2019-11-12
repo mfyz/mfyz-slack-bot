@@ -1,22 +1,26 @@
+require('dotenv').config()
 const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
+
+const handleEvents = require('./handle-events')
+
 const PORT = process.env.PORT || 8112
 
 const app = express()
 app.use(bodyParser.json())
 
 app.get('/', function (req, res) {
-	res.json({ title: 'Hey', message: 'Hello there!' })
+	res.send('Nothing here!')
 })
 
 app.all('/slack-events', function (req, res) {
-	let payload = req.body;
-	console.log(payload);
-	if (!req.body) return res.status(400).send('Request is missing body!')
+	const payload = req.body;
+	// console.log(payload);
 
-	// payload.type
-	// payload.token
+	if (!payload.challenge && !payload.type) return res.status(400).send('Request is missing evnent dedails in the body!')
+
+	handleEvents(payload)
  
 	res.send(payload.challenge);
 })
